@@ -103,7 +103,7 @@
        PERFORM UNTIL EndOfWorkFile
           MOVE StudentNameWF TO StudentNameSF
           MOVE GradYearWF    TO GradYearSF
-          MOVE CourseName(CourseCodeWF) TO CourseNameSF
+          MOVE CourseName TO CourseNameSF
           MOVE EmailDomainWF TO EmailDomainSF
           SET Cidx TO 1
           SEARCH Country
