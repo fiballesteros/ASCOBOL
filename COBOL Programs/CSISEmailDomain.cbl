@@ -61,9 +61,9 @@
        02 FILLER REDEFINES CourseValue.
             03 CourseName      PIC X(5).
 
-           01 CountryTable.
-          02 Country OCCURS 243 TIMES INDEXED BY Cidx.
-        03 CountryCode    PIC XX.
+       01 CountryTable.
+           02 Country OCCURS 243 TIMES INDEXED BY Cidx.
+           03 CountryCode    PIC XX.
            03 CountryName    PIC X(26).
 
        PROCEDURE DIVISION.
@@ -120,15 +120,15 @@
 
        CreateCountryTable.
        OPEN INPUT CountryFile
-       READ CountryFile
-         AT END SET EndOfCountryFile TO TRUE
+           READ CountryFile
+           AT END SET EndOfCountryFile TO TRUE
        END-READ
        PERFORM VARYING Cidx FROM 1 BY 1 UNTIL EndOfCountryFile
-         MOVE CountryRec TO Country(Cidx)
-         READ CountryFile
-           AT END SET EndOfCountryFile TO TRUE
-        END-READ
+           MOVE CountryRec TO Country(Cidx)
+           READ CountryFile
+            AT END SET EndOfCountryFile TO TRUE
+       END-READ
        END-PERFORM.
        CLOSE CountryFile.
        CLOSE SortedDomainFile.
-       Exit.
+       EXIT.
