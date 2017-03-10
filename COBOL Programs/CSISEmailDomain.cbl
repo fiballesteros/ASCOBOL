@@ -27,22 +27,23 @@
            88 EndOfCountryInfo   VALUE HIGH-VALUES.
 
        FD GraduateInfo.
-           01 GraduateInfoRecordGI.
-           88 EndOfGradFile     VALUE HIGH-VALUES.
-           02 Grad-Name         PIC X(25).
-           02 Grad-Year         PIC 9(4).
-           02 Course-Code       PIC 9.
-           88 CSISGraduate      VALUE 1 THRU 5.
-           02 Grad-Email        PIC X(28).
-           02 Grad-Email-Domain PIC X(20).
-           02 Country-Code      PIC XX.
+           01 GraduateInfoRecord.
+           88 EndOfGradFileGI    VALUE HIGH-VALUES.
+           02 StudentNameGI      PIC X(25).
+           02 GradYearGI         PIC 9(4).
+           02 CourseCodeGI       PIC 9.
+           88 CSISGradutaeGI     VALUE 1 THRU 5.
+           02 EmailAddrGI        PIC X(28).
+           02 EmailDomainGI      PIC X(20).
+           02 CountryCodeGI      PIC XX.
 
        FD SortedFile.
-           01 Email-Domain    PIC X(20).
-           01 Grad-Name          PIC X(25).
-           01 Grad-Year         PIC 9(4).
-           01 CourseNameSF       PIC X(25).
-           01 CountryNameSF      PIC X(26).
+           01 GradInfoRec.
+           02 EmailDomainSF      PIC X(20).
+           02 StudentNameSF      PIC X(25).
+           02 GradYearSF         PIC 9(4).
+           02 CourseNameSF       PIC X(25).
+           02 CountryNameSF      PIC X(26).
 
        SD WorkFile.
        01 WorkRec.
