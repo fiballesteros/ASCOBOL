@@ -65,10 +65,31 @@
            03 CountryName    PIC X(26).
 
        PROCEDURE DIVISION.
-       Begin.
        SORT WorkFile ON ASCENDING KEY EmailDomainWF
-        INPUT PROCEDURE  IS SelectCSISGraduates
+        INPUT PROCEDURE  IS CSISGraduates
         OUTPUT PROCEDURE IS MakeEmailDomainFile.
        STOP RUN.
+
+       CSISGraduates.
+       OPEN INPUT GraduateInfoFile
+       READ GraduateInfoFile
+       AT END SET EndOfGradFile TO TRUE
+       END-READ
+       PERFORM UNTIL EndOfGradFile
+       IF CSISGraduate
+          MOVE StudentNameGF TO StudentNameWF
+          MOVE GradYearGF    TO GradYearWF
+          MOVE CourseCodeGF  TO CourseCodeWF
+          MOVE EmailDomainGF TO EmailDomainWF
+          MOVE CountryCodeGF TO CountryCodeWF
+          RELEASE WorkRec
+       ELSE
+          DISPLAY "Student not found " StudentNameGF SPACE CourseCodeGF
+       END-IF
+       READ GraduateInfoFile
+         AT END SET EndOfGradFile TO TRUE
+       END-READ
+         END-PERFORM
+        CLOSE GraduateInfoFile.
 
        END PROGRAM CSISEmailDomain.
