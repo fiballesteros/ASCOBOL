@@ -87,7 +87,6 @@
            02  FILLER            PIC X(19) VALUE "TOTAL SALES       :".
            02  PrintTotalSales         PIC BBBBBBZZ,ZZ9.
 
-
        01  TotalQuantitySold.
            02  FILLER                  PIC X(33) VALUE SPACES.
            02  FILLER           PIC X(19) VALUE "TOTAL QTY SOLD    :".
@@ -137,5 +136,59 @@
        END-PERFORM.
 
          CLOSE SalesFile.
+
+
+       PrintSummaryReport.
+       OPEN OUTPUT SummaryReport.
+       OPEN OUTPUT SortFile.
+       WRITE PrintLine FROM Report-Heading-Line AFTER
+       ADVANCING 1 LINE.
+       WRITE PrintLine FROM Report-Heading-Underline AFTER
+       ADVANCING 1 LINE.
+       WRITE PrintLine FROM Topic-Heading-Line AFTER ADVANCING 3 LINES.
+
+       RETURN WorkFile
+        AT END SET End-Of-Work-File TO TRUE
+       END-RETURN.
+
+       PERFORM PrintCustomerLine UNTIL End-Of-Work-File
+
+       MOVE TotalSales TO PrintTotalSales.
+       WRITE PrintLine FROM TotalSalesLine AFTER ADVANCING 3 LINES.
+
+       MOVE TotalQuantitySold TO PrintTotalQuantitySold
+       WRITE PrintLine FROM TotalQuantitySoldLine AFTER ADVANCING
+       2 LINES.
+
+       MOVE TotalSalesValue TO PrintTotalSalesValue.
+       WRITE PrintLine FROM TotalSalesValueLine AFTER ADVANCING 2 LINES.
+
+       CLOSE SummaryReport, SortedFile.
+
+       PrintCustomerLines.
+       MOVE ZEROS TO CustomerTotal.
+       MOVE CustomerIDWF TO PrintCustomerID, PreviousCustomerID.
+       MOVE CustomerNameWF TO PrintCustomerName.
+
+        PERFORM UNTIL CustomerIDWF NOT = PreviousCustomerID
+        WRITE SortedRecord FROM WorkRecord
+        ADD 1 TO CustomerSales, TotalSales
+
+        COMPUTE SaleQuantitySold = UnitSizeWF * UnitSoldWF
+        ADD SaleQuantitySold TO CustomerQuantitySold, TotalQuantitySold
+
+        COMPUTE SaleValue = SaleQuantitySold * (OilNumWF)
+        ADD SaleValue TO CustomerSalesValue, TotalSalesValue
+
+        RETURN WorkFile
+            AT END SET End-Of-Work-File TO TRUE
+        END-RETURN
+        END-PERFORM.
+
+        MOVE CustomerSales TO PrintCustomerSales.
+        MOVE CustomerQuantitySold TO PrintQuantitySold.
+        MOVE CustomerSalesValue TO PrintSalesValue.
+
+       WRITE PrintLine FROM CustomerSalesLine AFTER ADVANCING 2 LINES.
 
        END-PROGRAM.
