@@ -40,7 +40,7 @@
                03 FILLER               PIC X.
                03 OilNumWF           PIC 99.
            02 UnitSizeWF             PIC 99.
-           02 UnitsSoldWF            PIC 999.
+           02 UnitSoldWF            PIC 999.
 
        FD SummaryReport.
            01 PrintLine                   PIC X(64).
@@ -68,50 +68,56 @@
         02  FILLER                  PIC X(32) VALUE ALL "-".
 
        01  Topic-Heading-Line.
-        02  FILLER                  PIC BX(13) VALUE " CUSTOMER NAME".
-            02  FILLER                  PIC X(8) VALUE SPACES.
-        02  FILLER                  PIC X(10) VALUE "CUST-ID   ".
-        02  FILLER                  PIC X(8) VALUE "SALES   ".
-       02  FILLER                  PIC X(11) VALUE "QTY SOLD   ".
-        02  FILLER                  PIC X(11) VALUE "SALES VALUE".
+           02  FILLER               PIC BX(13) VALUE " CUSTOMER NAME".
+           02  FILLER               PIC X(8) VALUE SPACES.
+           02  FILLER               PIC X(10) VALUE "CUST-ID   ".
+           02  FILLER               PIC X(8) VALUE "SALES   ".
+           02  FILLER               PIC X(11) VALUE "QTY SOLD   ".
+           02  FILLER               PIC X(11) VALUE "SALES VALUE".
 
-       01  Cust-Sales-Line.
-           02  Prn-Cust-Name           PIC X(20).
-           02  Prn-Cust-Id             PIC BBB9(5).
-           02  Prn-Cust-Sales          PIC BBBBBZZ9.
-           02  Prn-Qty-Sold            PIC BBBBBZZ,ZZ9.
-           02  Prn-Sales-Value         PIC BBBB$$$,$$9.99.
+       01  CustomerSalesLine.
+           02  PrintCustomerName           PIC X(20).
+           02  PrintCustomerID             PIC BBB9(5).
+           02  PrintCustomerSales          PIC BBBBBZZ9.
+           02  PrintQuantitySold            PIC BBBBBZZ,ZZ9.
+           02  PrintSalesValue         PIC BBBB$$$,$$9.99.
 
-       01  Total-Sales-Line.
+       01  TotalSalesLine.
            02  FILLER                  PIC X(33) VALUE SPACES.
            02  FILLER            PIC X(19) VALUE "TOTAL SALES       :".
-           02  Prn-Total-Sales         PIC BBBBBBZZ,ZZ9.
+           02  PrintTotalSales         PIC BBBBBBZZ,ZZ9.
 
 
-       01  Total-Qty-Sold-Line.
+       01  TotalQuantitySold.
            02  FILLER                  PIC X(33) VALUE SPACES.
            02  FILLER           PIC X(19) VALUE "TOTAL QTY SOLD    :".
-           02  Prn-Total-Qty-Sold      PIC BBBBBZZZ,ZZ9.
+           02  PrintTotalQualitySold      PIC BBBBBZZZ,ZZ9.
 
-       01  Total-Sales-Value-Line.
+       01  TotalSalesValueLine.
            02  FILLER                  PIC X(33) VALUE SPACES.
            02  FILLER          PIC X(19) VALUE "TOTAL SALES VALUE :".
-           02  Prn-Total-Sales-Value   PIC B$$$$,$$9.99.
+           02  PrintTotalSalesValue   PIC B$$$$,$$9.99.
 
-       01  Cust-Totals.
-           02  Cust-Sales              PIC 999.
-           02  Cust-Qty-Sold           PIC 9(5).
-           02  Cust-Sales-Value        PIC 9(5)V99.
+       01  CustomerTotal.
+           02  CustomerSales              PIC 999.
+           02  CustomerQuantitySold           PIC 9(5).
+           02  CustomerSalesValue        PIC 9(5)V99.
 
-       01  Final-Totals.
-           02  Total-Sales             PIC 9(5)    VALUE ZEROS.
-           02  Total-Qty-Sold          PIC 9(6)    VALUE ZEROS.
-           02  Total-Sales-Value       PIC 9(6)V99 VALUE ZEROS.
+       01  FinalTotal.
+           02  TotalSales           PIC 9(5)    VALUE ZEROS.
+           02  TotalQuantitySold          PIC 9(6)    VALUE ZEROS.
+           02  TotalSalesValue      PIC 9(6)V99 VALUE ZEROS.
 
        01  Temp-Variables.
-            02  Sale-Qty-Sold           PIC 99999.
-            02  Value-Of-Sale           PIC 999999V99.
-            02  Prev-Cust-Id            PIC X(5).
+            02  SaleQuantitySold          PIC 99999.
+            02  SaleValue           PIC 999999V99.
+            02  PreviousCustomerID            PIC X(5).
 
        PROCEDURE DIVISION.
+       CreateSummaryReport.
+        SORT WorkFile ON ASCENDING CustomerNameWF
+         INPUT PROCEDURE IS ChooseOil.
+         OUTPUT PROCEDURE IS PrintSummaryReport.
+
+       STOP RUN.
        END-PROGRAM.
