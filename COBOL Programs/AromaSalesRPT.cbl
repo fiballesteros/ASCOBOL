@@ -116,8 +116,26 @@
        PROCEDURE DIVISION.
        CreateSummaryReport.
         SORT WorkFile ON ASCENDING CustomerNameWF
-         INPUT PROCEDURE IS ChooseOil.
+         INPUT PROCEDURE IS ChooseOil
          OUTPUT PROCEDURE IS PrintSummaryReport.
 
        STOP RUN.
+
+       ChooseOil.
+       OPEN INPUT SalesFile.
+       READ SalesFile
+        AT END SET End-Of-Sales-File TO TRUE
+       END-READ.
+
+       PERFORM UNTIL End-Of-Sales-File
+           IF EssentialOil
+               RELEASE WorkRecord FROM SalesRecord
+           END-IF
+       READ SalesFile
+           AT END SET End-Of-Sales-File TO TRUE
+       END-READ
+       END-PERFORM.
+
+         CLOSE SalesFile.
+
        END-PROGRAM.
