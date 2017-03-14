@@ -85,4 +85,10 @@
        01  BookSalesTotal               PIC 9(4).
 
        PROCEDURE DIVISION.
+       BEGIN.
+       SORT WorkFile ON ASCENDING KEY W-BookNum
+           INPUT PROCEDURE IS SelectBookSales
+           OUTPUT PROCEDURE IS PrintBestSellersList.
+       STOP RUN.
+
        END PROGRAM BESTSELLERS01.
