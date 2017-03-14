@@ -65,7 +65,7 @@
            02 FILLER             PIC X(5)  VALUE "Sales".
 
        01  BookRankLine.
-           02 PrnRank            PIC ZZ9.
+           02 PrintRank            PIC ZZ9.
            02 FILLER             PIC X VALUE ".".
            02 FILLER             PIC X(4) VALUE SPACES.
            02 PrintBookNumber    PIC 9(5).
@@ -91,4 +91,24 @@
            OUTPUT PROCEDURE IS PrintBestSellersList.
        STOP RUN.
 
+       SelectBookSales.
+           OPEN INPUT BookMasterFile
+           OPEN OUTPUT ReportFile
+               WRITE PrintLine FROM FirstHeading AFTER ADVANCING PAGE.
+               WRITE PrintLine FROM SecondHeading AFTER ADVANCING 1 LINE.
+               WRITE PrintLine FROM ThirdHeading AFTER ADVANCING 3 LINES.
+
+       RETURN WorkFile
+           AT END SET EndOfWorkfile TO TRUE
+       END-RETURN
+
+       PERFORM GetBookRankings UNTIL EndOfWorkfile
+       PERFORM PrintBookRankings
+           VARYING Rank FROM 1 BY 1 UNTIL Rank > 10
+
+       CLOSE ReportFile, BookMasterFile.
+
+       PrintBestSellersList.
+       GetBookRankings.
+       PrintBookRankings.
        END PROGRAM BESTSELLERS01.
