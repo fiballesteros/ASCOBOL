@@ -91,6 +91,7 @@
            OUTPUT PROCEDURE IS PrintBestSellersList.
        STOP RUN.
 
+      * This method is used to present the report in tabular format.
        SelectBookSales.
            OPEN INPUT BookMasterFile
            OPEN OUTPUT ReportFile
@@ -102,6 +103,8 @@
            AT END SET EndOfWorkfile TO TRUE
        END-RETURN
 
+      *The varying condition specifies that only 10 data will be printed
+      *in the report
        PERFORM GetBookRankings UNTIL EndOfWorkfile
        PERFORM PrintBookRankings
            VARYING Rank FROM 1 BY 1 UNTIL Rank > 10
