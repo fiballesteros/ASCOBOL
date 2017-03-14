@@ -91,7 +91,8 @@
            OUTPUT PROCEDURE IS PrintBestSellersList.
        STOP RUN.
 
-      * This method is used to present the report in tabular format.
+      * This method illustrates how the report must be presented in a
+      * tabular format.
        SelectBookSales.
            OPEN INPUT BookMasterFile
            OPEN OUTPUT ReportFile
@@ -111,7 +112,16 @@
 
        CLOSE ReportFile, BookMasterFile.
 
+      *The method for displaying the list of best selling books
        PrintBestSellersList.
+           MOVE Rank TO PrnRank
+           MOVE BookNumber(Rank) TO PrnBookNum
+           MOVE BookTitle(Rank) TO PrnBookTitle
+           MOVE Author(Rank) TO PrnAuthorName
+           MOVE BookSales(Rank) TO PrnSales
+           WRITE PrintLine FROM Book-Rank-Line
+        AFTER ADVANCING 2 LINES.
+
        GetBookRankings.
        PrintBookRankings.
        END PROGRAM BESTSELLERS01.
