@@ -2,3 +2,10 @@ Getting started with Yii
 1. Open config/web.php
 2. Add any value to line 12
 ex. 'cookieValidationKey' => 'abcde',
+
+--------
+Yii has Gii (code generation) which means it will write the code for you.
+- It allows agile development
+- It has basic functionalities: CRUD
+
+http://localhost/yii/basic/web/index.php?r=gii 
