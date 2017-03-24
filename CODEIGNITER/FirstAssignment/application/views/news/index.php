@@ -18,11 +18,11 @@
         <tr>
             <td><?php echo $news_item['title']; ?></td>
             <td><?php echo $news_item['text']; ?></td>
-			<td><?php echo $news_item['First name']; ?></td>
-			<td><?php echo $news_item['Last name']; ?></td>
+			<td><?php echo $news_item['FirstName']; ?></td>
+			<td><?php echo $news_item['LastName']; ?></td>
 			<td><?php echo $news_item['Nickname']; ?></td>
-			<td><?php echo $news_item['Email Address']; ?></td>
-			<td><?php echo $news_item['Home Address']; ?></td>
+			<td><?php echo $news_item['EmailAddress']; ?></td>
+			<td><?php echo $news_item['HomeAddress']; ?></td>
 			<td><?php echo $news_item['Gender']; ?></td>
 			<td><?php echo $news_item['Cellphone']; ?></td>
 			<td><?php echo $news_item['Comment']; ?></td>
