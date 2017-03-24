@@ -1,0 +1,4 @@
+Getting started with Yii
+1. Open config/web.php
+2. Add any value to line 12
+ex. 'cookieValidationKey' => 'abcde',
