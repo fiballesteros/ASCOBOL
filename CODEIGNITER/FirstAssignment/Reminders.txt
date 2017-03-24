@@ -1,0 +1,3 @@
+Remaining tasks for this exercise: 
+1. Add validation
+2. Add CSS
